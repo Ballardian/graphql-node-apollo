@@ -6,13 +6,7 @@ export const typeDefs = `#graphql
     age: Int!
     nationality: Nationality!
     friends: [User]
-  }
-
-  type Query {
-    users: [User!]!
-    user(id: ID!): User!
-    movies: [Movie!]!
-    movie(id: ID!): Movie!
+    favouriteMovies: [Movie]
   }
 
   type Movie {
@@ -21,6 +15,31 @@ export const typeDefs = `#graphql
     yearOfPublication: Int!
     isInTheaters: Boolean!
     actors: [User]
+  }
+# TODO split by type e.g. user?
+  type Query {
+    users: [User!]!
+    user(id: ID!): User!
+    movies: [Movie!]!
+    movie(id: ID!): Movie!
+  }
+
+  type Mutation {
+    createUser(input: CreateUserInput!): User!
+    updateUser(input: UpdateUserInput!): User
+    deleteUser(id: ID!): User
+  }
+
+  input CreateUserInput {
+    name: String!
+    username: String!
+    age: Int = 18
+    # TODO force this to one of enum choices
+    nationality: Nationality = CANADA
+  }
+  input UpdateUserInput {
+    id: ID!
+    newUsername: String!
   }
 
   enum Nationality {
